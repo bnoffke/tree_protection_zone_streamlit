@@ -434,7 +434,7 @@ if geojson_data is not None:
                 view_state = pdk.ViewState(
                     latitude=filtered_df['latitude'].mean(),
                     longitude=filtered_df['longitude'].mean(),
-                    zoom=14,
+                    zoom=12,
                     pitch=0
                 )
                 
@@ -444,7 +444,7 @@ if geojson_data is not None:
                     <b>Species:</b> {species_common}<br/>
                     <b>Botanical:</b> {species_botanical}<br/>
                     <b>Diameter:</b> {diameter} inches<br/>
-                    <b>Protection Zone:</b> {protection_radius_feet:.1f} feet<br/>
+                    <b>Protection Zone:</b> {protection_radius_feet} feet<br/>
                     <b>Status:</b> {status}<br/>
                     <b>Site ID:</b> {site_id}
                     """,
@@ -465,18 +465,11 @@ if geojson_data is not None:
                 )
                 
                 # Display the map
-                st.pydeck_chart(deck)
+                st.pydeck_chart(deck,height=800)
                 
-                # Display sample data
-                with st.expander("View Sample Data"):
-                    st.dataframe(filtered_df.head(20))
+
                 
-                # Species analysis
-                if len(filtered_df) > 0:
-                    with st.expander("🌳 Species Analysis"):
-                        species_counts = filtered_df['species_common'].value_counts().head(10)
-                        st.subheader("Top 10 Species")
-                        st.bar_chart(species_counts)
+                
             
     except Exception as e:
         st.error(f"Error processing data: {str(e)}")
